@@ -1,0 +1,77 @@
+---
+---
+
+<div id = "three-container"></div>
+
+<style>
+    #three-container {
+        width: 100dvw;
+        height: 100dvh;
+        display: block;
+        position: absolute;
+        z-index: -1;
+    }
+</style>
+
+<script>
+    import * as THREE from 'three';
+    import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
+    import vertexShader from '../shaders/vertex.glsl';
+    import fragmentShader from '../shaders/fragment.glsl';
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const container = document.getElementById('three-container');
+
+        if (!container) {
+            console.log('Container not found');
+            return;
+        }
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({antialias: true});
+
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+
+        const sphereGeo = new THREE.SphereGeometry(7, 32, 16);
+        const material = new THREE.ShaderMaterial({
+            vertexShader,
+            fragmentShader,
+            uniforms: {
+                uTime: {value: 0}
+            },
+            transparent: true,
+        });
+
+        const sphere = new THREE.Mesh(sphereGeo,material);
+        scene.add(sphere);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+
+        camera.position.z = 20;
+
+        const animate = function() {
+            requestAnimationFrame(animate);
+
+            material.uniforms.uTime.value += 0.01;
+
+            // sphere.rotation.x += 0.001;
+
+            controls.update();
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        })
+    })
+
+
+</script>
