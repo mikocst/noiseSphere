@@ -10,9 +10,64 @@ import ThreeScene from "../components/ThreeScene.astro"
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro</title>
 	</head>
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		body {
+			position: relative;
+		}
+
+		section {
+			height: 100dvh;
+			display: flex;
+			justify-content: start;
+			align-items: center;
+			
+		}
+
+		.container {
+			width: 90%;
+			margin-left: auto;
+			margin-right: auto;
+		}
+
+		p {
+			max-width: 65ch;
+		}
+		
+		.button-wrapper {
+			margin-top: 1rem;
+		}
+
+		.button-wrapper * {
+			margin-right: 0.5rem;
+		}
+
+		button {
+			cursor: pointer;
+		}
+	</style>
+
 	<body>
 		<main>
 			<ThreeScene/>
+			<section>
+				<div class = "container">
+					<h1>A cool noise sphere</h1>
+					<p>
+						There's not much here. I just wanted to practice making some html content above a 3JS scene and use Astro. The idea for this came from 3JS journey by Bruno Simon.
+					</p>
+
+					<div class = "button-wrapper">
+						<button>Check out 3JS Journey</button>
+						<button>Demo Button</button>
+					</div>
+				</div>
+				</section>
 		</main>
 	</body>
 </html>
